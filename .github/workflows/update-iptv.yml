@@ -1,0 +1,27 @@
+name: Update WuXing IPTV Links
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Run every hour (at minute 0)
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  update-iptv-links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run IPTV extraction script
+        run: |
+          chmod +x run.sh
+          ./run.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add WuXingTiYu.m3u
+          git diff --staged --quiet || git commit -m "Update WuXingTiYu IPTV links"
+          git push
