@@ -6,151 +6,156 @@ OUTPUT_FILE="WuXingTiYu.m3u"
 # Create the header for the m3u file
 echo "#EXTM3U" > "$OUTPUT_FILE"
 
-# Extract URLs from the input HTML
-echo "Extracting IPTV links for 五星体育..."
+# Save minimal logs for debugging
+echo "Starting extraction at $(date)" > debug_info.txt
 
-# Save the current date for debugging
-date > debug_info.txt
-echo "Starting extraction process..." >> debug_info.txt
-
-# Use the most successful search method based on debug logs
-SEARCH_URL="https://tonkiang.us/?iptv=%E4%BA%94%E6%98%9F%E4%BD%93%E8%82%B2&l=fa5a96d92a"
+# Configuration
+SEARCH_TERM="%E4%BA%94%E6%98%9F%E4%BD%93%E8%82%B2" # URL-encoded "五星体育"
+BASE_URL="https://tonkiang.us"
+SEARCH_URL="${BASE_URL}/?iptv=${SEARCH_TERM}"
 USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 
+echo "Extracting IPTV links for 五星体育..."
 echo "Using URL: $SEARCH_URL" >> debug_info.txt
-echo "Using User-Agent: $USER_AGENT" >> debug_info.txt
 
-# Perform the GET request
-curl -s -A "$USER_AGENT" \
-     --connect-timeout 30 \
-     --max-time 60 \
-     -v "$SEARCH_URL" > temp_html.txt 2>> curl_debug.log
+# Create a temporary directory for all pages
+mkdir -p temp_pages
 
-# Check if we got any content
-if [ ! -s temp_html.txt ]; then
-    echo "Error: Could not retrieve content from the URL." | tee -a debug_info.txt
+# Initialize an empty file for collecting all URLs
+> all_urls.txt
+
+# Function to extract URLs from a page
+extract_urls() {
+    local page_file=$1
+    local output_file=$2
     
-    # Try alternative URL as fallback
-    FALLBACK_URL="https://tonkiang.us/?iptv=%E4%BA%94%E6%98%9F%E4%BD%93%E8%82%B2"
-    echo "Trying fallback URL: $FALLBACK_URL" >> debug_info.txt
+    # Primary extraction method - most reliable for this site
+    cat "$page_file" | grep -o 'onclick="bmjx(&quot;\(http[^&]*\)&quot;)' | sed 's/onclick="bmjx(&quot;\(.*\)&quot;)/\1/' > "$output_file"
     
-    curl -s -A "$USER_AGENT" \
-         --connect-timeout 30 \
-         --max-time 60 \
-         "$FALLBACK_URL" > temp_html.txt
-         
-    if [ ! -s temp_html.txt ]; then
-        echo "Error: Could not retrieve content from fallback URL either." >> debug_info.txt
+    # Get count of URLs found
+    url_count=$(wc -l < "$output_file")
+    
+    # Try secondary methods if needed
+    if [ "$url_count" -lt 5 ]; then
+        # Try alternative extraction methods
+        cat "$page_file" | grep -o 'http[s]\?://[^"]*\.m3u8[^"]*' >> "$output_file"
+        cat "$page_file" | grep -o 'http[s]\?://[^"]*livehttpplay[^"]*' >> "$output_file"
+        cat "$page_file" | grep -o 'http[s]\?://[^"]*TVOD[^"]*' >> "$output_file"
+    fi
+    
+    # Clean up URLs and remove duplicates
+    cat "$output_file" | sed 's/<\/tba>$//g' | sed 's/<[^>]*>//g' | sort -u > clean_urls.txt
+    mv clean_urls.txt "$output_file"
+}
+
+# Process page 1
+echo "Processing search results..." | tee -a debug_info.txt
+
+# Fetch the first page
+curl -s -A "$USER_AGENT" --connect-timeout 30 --max-time 60 "$SEARCH_URL" > temp_pages/page_1.html 2>/dev/null
+
+# If first page fails, try the fallback URL
+if [ ! -s temp_pages/page_1.html ]; then
+    echo "Trying fallback URL..." >> debug_info.txt
+    curl -s -A "$USER_AGENT" --connect-timeout 30 --max-time 60 \
+        "https://tonkiang.us/?iptv=%E4%BA%94%E6%98%9F%E4%BD%93%E8%82%B2" > temp_pages/page_1.html
+    
+    if [ ! -s temp_pages/page_1.html ]; then
+        echo "Error: Could not retrieve content from any URL." >> debug_info.txt
         exit 1
     fi
 fi
 
-# Save HTML size for debugging
-echo "HTML size: $(wc -c < temp_html.txt) bytes" >> debug_info.txt
+# Save a copy for debugging
+cp temp_pages/page_1.html last_html_response.txt
 
-# Check if the page contains any mention of 五星体育
-if grep -q "五星体育" temp_html.txt; then
-    echo "Page contains the text '五星体育'" >> debug_info.txt
-else
-    echo "Warning: No mention of '五星体育' in the page" >> debug_info.txt
+# Extract URLs from the first page
+extract_urls "temp_pages/page_1.html" "temp_pages/urls_1.txt"
+cat "temp_pages/urls_1.txt" >> all_urls.txt
+
+# Check for pagination links
+PAGE_LINKS=$(grep -o '<a [^>]*class="page-link"[^>]*>[0-9]\+</a>' temp_pages/page_1.html || echo "")
+
+if [ -n "$PAGE_LINKS" ]; then
+    # Get max page number
+    MAX_PAGE=$(echo "$PAGE_LINKS" | grep -o '>[0-9]\+<' | sed 's/[^0-9]//g' | sort -n | tail -1)
+    echo "Processing $MAX_PAGE pages of results..." | tee -a debug_info.txt
+    
+    # Process additional pages (starting from page 2)
+    for ((page=2; page<=$MAX_PAGE; page++)); do
+        PAGE_URL="${SEARCH_URL}&page=${page}"
+        
+        # Fetch the page
+        curl -s -A "$USER_AGENT" --connect-timeout 30 --max-time 60 \
+             "$PAGE_URL" > "temp_pages/page_${page}.html" 2>/dev/null
+             
+        # Process if page was retrieved successfully
+        if [ -s "temp_pages/page_${page}.html" ]; then
+            extract_urls "temp_pages/page_${page}.html" "temp_pages/urls_${page}.txt"
+            cat "temp_pages/urls_${page}.txt" >> all_urls.txt
+        fi
+        
+        # Small delay to avoid overwhelming the server
+        sleep 1
+    done
 fi
 
-# Extract URLs with our primary pattern matching method
-echo "Extracting links using primary method..." >> debug_info.txt
-cat temp_html.txt | grep -o 'https\?://[^"<>[:space:]]*' | 
-grep -E '\.m3u8|/udp/|/TVOD/|livehttpplay|\.ts|/live/|rtmp:|rtsp:' | 
-sort -u > temp_urls.txt
-
-URL_COUNT=$(wc -l < temp_urls.txt)
-echo "URLs found with primary method: $URL_COUNT" >> debug_info.txt
-
-# If we didn't find many URLs, try secondary methods
-if [ "$URL_COUNT" -lt 10 ]; then
-    echo "Found fewer than 10 URLs, trying secondary methods..." >> debug_info.txt
-    
-    # Method 2: Look for src attributes
-    echo "Trying extraction method 2..." >> debug_info.txt
-    cat temp_html.txt | grep -o 'src="https\?://[^"]*"' | sed 's/src="//;s/"$//' | 
-    grep -E '\.m3u8|/udp/|/TVOD/|livehttpplay|\.ts|/live/|rtmp:|rtsp:' | 
-    sort -u >> temp_urls.txt
-    
-    # Method 3: Look for href attributes
-    echo "Trying extraction method 3..." >> debug_info.txt
-    cat temp_html.txt | grep -o 'href="[^"]*"' | sed 's/href="//;s/"$//' | 
-    grep -E 'https?://' | 
-    grep -E '\.m3u8|/udp/|/TVOD/|livehttpplay|\.ts|/live/|rtmp:|rtsp:' | 
-    sort -u >> temp_urls.txt
-    
-    # Method 4: Look for URLs in JavaScript strings
-    echo "Trying extraction method 4..." >> debug_info.txt
-    cat temp_html.txt | grep -o '"https\?://[^"]*"' | sed 's/"//g' | 
-    grep -E '\.m3u8|/udp/|/TVOD/|livehttpplay|\.ts|/live/|rtmp:|rtsp:' | 
-    sort -u >> temp_urls.txt
-    
-    URL_COUNT=$(wc -l < temp_urls.txt)
-    echo "Total URLs found after all methods: $URL_COUNT" >> debug_info.txt
-fi
+# Deduplicate all URLs
+sort -u all_urls.txt > unique_urls.txt
+URL_COUNT=$(wc -l < unique_urls.txt)
+echo "Total unique URLs found: $URL_COUNT" >> debug_info.txt
 
 # Process the URLs and add them to the m3u file
-if [ -s temp_urls.txt ]; then
-    # Remove any duplicates
-    sort -u temp_urls.txt > unique_urls.txt
-    
+if [ -s unique_urls.txt ]; then
     # Initialize counter for channel numbering
     COUNTER=1
     
     while read -r url; do
-        # Format as m3u entry with proper EXTINF line
+        # Skip malformed URLs
+        if [[ ! "$url" =~ ^http[s]?:// ]]; then
+            continue
+        fi
+        
+        # Format as m3u entry
         echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#${COUNTER}:五星体育" >> "$OUTPUT_FILE"
         echo "$url" >> "$OUTPUT_FILE"
-        echo "Added: #${COUNTER}:五星体育 - $url"
+        echo "Added: #${COUNTER}:五星体育"
         
         # Increment counter
         ((COUNTER++))
     done < unique_urls.txt
     
-    TOTAL_LINKS=$(grep -c "https\?://" "$OUTPUT_FILE")
-    echo "Done! IPTV links saved to $OUTPUT_FILE" | tee -a debug_info.txt
-    echo "Total links: $TOTAL_LINKS" | tee -a debug_info.txt
+    TOTAL_LINKS=$((COUNTER - 1))
+    echo "Found $TOTAL_LINKS links" | tee -a debug_info.txt
     
-    # Check if we actually found enough links
+    # Add fallback links if we found too few
     if [ "$TOTAL_LINKS" -lt 4 ]; then
-        echo "Warning: Only found $TOTAL_LINKS links which is less than expected." | tee -a debug_info.txt
+        echo "Adding fallback links..." >> debug_info.txt
         
-        # Add these known working fallback links if we found too few
         echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#${COUNTER}:五星体育 (Fallback 1)" >> "$OUTPUT_FILE"
         echo "http://112.25.48.68/live/program/live/ssty/4000000/mnf.m3u8" >> "$OUTPUT_FILE"
         ((COUNTER++))
         
         echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#${COUNTER}:五星体育 (Fallback 2)" >> "$OUTPUT_FILE"
         echo "http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/ssty/4000000/mnf.m3u8" >> "$OUTPUT_FILE"
-        ((COUNTER++))
-        
-        echo "Added 2 fallback links" | tee -a debug_info.txt
     fi
 else
-    echo "Error: No IPTV links found." | tee -a debug_info.txt
-    
     # Add fallback links when no URLs are found
+    echo "No links found. Adding fallback links..." | tee -a debug_info.txt
+    
     echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#1:五星体育 (Fallback)" >> "$OUTPUT_FILE"
     echo "http://112.25.48.68/live/program/live/ssty/4000000/mnf.m3u8" >> "$OUTPUT_FILE"
     
     echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#2:五星体育 (Fallback)" >> "$OUTPUT_FILE"
     echo "http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/ssty/4000000/mnf.m3u8" >> "$OUTPUT_FILE"
-    
-    echo "Added fallback links as no fresh links were found" | tee -a debug_info.txt
 fi
 
-# Save important files for debugging but clean up temporary files
+# Finalize logs and clean up
 mv debug_info.txt debug_extraction_log.txt
-mv curl_debug.log curl_debug_log.txt
-if [ -f temp_html.txt ]; then
-    mv temp_html.txt last_html_response.txt
-fi
-if [ -f temp_urls.txt ]; then
-    mv temp_urls.txt found_urls.txt
-fi
-
-# Clean up other temporary files
-rm -f unique_urls.txt
 echo "Script completed at $(date)" >> debug_extraction_log.txt
+
+# Clean up temporary files
+rm -rf temp_pages
+rm -f all_urls.txt unique_urls.txt curl_debug.log
+
+echo "Done! IPTV links saved to $OUTPUT_FILE"
