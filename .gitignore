@@ -1,0 +1,24 @@
+# Ignore debug and log files
+*debug*.txt
+*_log*.txt
+curl_debug_log.txt
+debug_extraction_log.txt
+found_urls.txt
+last_html_response.txt
+
+# Ignore temporary files that might be created during script execution
+temp_*.txt
+*.tmp
+unique_urls.txt
+
+# Ignore macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
