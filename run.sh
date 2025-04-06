@@ -39,11 +39,17 @@ fi
 
 # Process the URLs and add them to the m3u file
 if [ -s temp_urls.txt ]; then
+    # Initialize counter for channel numbering
+    COUNTER=1
+    
     while read -r url; do
-        # Format as m3u entry with proper EXTINF line including tvg-logo and group-title
-        echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",五星体育" >> "$OUTPUT_FILE"
+        # Format as m3u entry with proper EXTINF line including tvg-logo, group-title and auto-iterating number
+        echo "#EXTINF:-1 tvg-logo=\"https://epg.iill.top/logo/五星体育.png\" group-title=\"五星体育\",#${COUNTER}:五星体育" >> "$OUTPUT_FILE"
         echo "$url" >> "$OUTPUT_FILE"
-        echo "Added: $url"
+        echo "Added: #${COUNTER}:五星体育 - $url"
+        
+        # Increment counter
+        ((COUNTER++))
     done < temp_urls.txt
     
     TOTAL_LINKS=$(grep -c "https\?://" "$OUTPUT_FILE")
