@@ -1,5 +1,117 @@
 #EXTM3U
-#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#1:五星体育 (Fallback)
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#1:五星体育
+http://103.185.249.69:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#2:五星体育
+http://103.185.249.69:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#3:五星体育
+http://108.181.20.197/livehttpplay?channel_id=20060
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#4:五星体育
+http://108.181.20.197/livehttpplay?channel_id=20060
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#5:五星体育
 http://112.25.48.68/live/program/live/ssty/4000000/mnf.m3u8
-#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#2:五星体育 (Fallback)
-http://219.151.31.38/liveplay-kk.rtxapp.com/live/program/live/ssty/4000000/mnf.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#6:五星体育
+http://112.25.48.68/live/program/live/ssty/4000000/mnf.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#7:五星体育
+http://115.132.201.25:8080/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#8:五星体育
+http://115.132.201.25:8080/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#9:五星体育
+http://125.180.29.102:8888/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#10:五星体育
+http://125.180.29.102:8888/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#11:五星体育
+http://129.150.58.101:50001/TVOD/2000000002000000007/hnbblive/index.m3u8?
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#12:五星体育
+http://129.150.58.101:50001/TVOD/2000000002000000007/hnbblive/index.m3u8?
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#13:五星体育
+http://129.150.58.101:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#14:五星体育
+http://129.150.58.101:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#15:五星体育
+http://129.150.58.101:50001/TVOD/5000000010000017540/bestzb/index.m3u8?
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#16:五星体育
+http://129.150.58.101:50001/TVOD/5000000010000017540/bestzb/index.m3u8?
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#17:五星体育
+http://130.162.194.93:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#18:五星体育
+http://130.162.194.93:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#19:五星体育
+http://132.226.156.63:40000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#20:五星体育
+http://132.226.156.63:40000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#21:五星体育
+http://138.2.44.94:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#22:五星体育
+http://138.2.44.94:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#23:五星体育
+http://146.56.165.66:7788/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#24:五星体育
+http://146.56.165.66:7788/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#25:五星体育
+http://150.230.254.137:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#26:五星体育
+http://150.230.254.137:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#27:五星体育
+http://154.12.86.130:32769/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#28:五星体育
+http://154.12.86.130:32769/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#29:五星体育
+http://154.201.73.55:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#30:五星体育
+http://154.201.73.55:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#31:五星体育
+http://154.37.220.151:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#32:五星体育
+http://154.37.220.151:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#33:五星体育
+http://154.53.164.86:5000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#34:五星体育
+http://154.53.164.86:5000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#35:五星体育
+http://154.64.254.6:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#36:五星体育
+http://154.64.254.6:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#37:五星体育
+http://154.7.180.77:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#38:五星体育
+http://154.7.180.77:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#39:五星体育
+http://156.226.171.32:50001/TVOD/2000000002000000007/hnbblive/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#40:五星体育
+http://156.226.171.32:50001/TVOD/2000000002000000007/hnbblive/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#41:五星体育
+http://168.138.160.251:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#42:五星体育
+http://168.138.160.251:50001/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#43:五星体育
+http://213.210.4.41:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#44:五星体育
+http://213.210.4.41:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#45:五星体育
+http://218.78.182.69:9901/tsfile/live/1010_1.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#46:五星体育
+http://218.78.182.69:9901/tsfile/live/1010_1.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#47:五星体育
+http://23.94.87.137:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#48:五星体育
+http://23.94.87.137:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#49:五星体育
+http://38.147.190.7:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#50:五星体育
+http://38.147.190.7:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#51:五星体育
+http://38.207.133.60:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#52:五星体育
+http://38.207.133.60:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#53:五星体育
+http://38.47.122.229:5000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#54:五星体育
+http://38.47.122.229:5000/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#55:五星体育
+http://43.239.249.89:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#56:五星体育
+http://43.239.249.89:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#57:五星体育
+http://8.218.67.196:50001/TVOD/5000000010000017540/bestzb/index.m3u8
+#EXTINF:-1 tvg-logo="https://epg.iill.top/logo/五星体育.png" group-title="五星体育",#58:五星体育
+http://8.218.67.196:50001/TVOD/5000000010000017540/bestzb/index.m3u8
